@@ -1,0 +1,111 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+#include "StringFile.h"
+
+//Constructor
+StringFile::StringFile(const char* file): rang(0),sizeClass(0)
+{
+  //Ouvre un fichier de nom file
+  this->file = new ifstream(file,ios::in);
+  
+  if(!(*file))
+    {
+      cerr << "Impossible d'ouvrir le fichier !" 
+	   << endl;
+    }
+  //Compte le nombre de char
+  while(this->file->good())
+    {
+      this->file->get();
+      sizeClass++;
+    }
+  //
+  sizeClass=sizeClass-1;
+  this->file->clear();
+  this->file->seekg(0,this->file->beg);
+}
+
+StringFile::~StringFile(){
+  if(file != NULL)
+    {
+      file->clear();
+      delete file;
+    }
+}
+
+string StringFile::iToj(unsigned int rang , unsigned int n)
+{
+  file->clear();
+  this->file->seekg(0,this->file->beg);
+  unsigned int copyRang=rang;
+  unsigned int copyN=n;
+  //Parcours les elt qui nous interesse pas
+  while(copyRang!=0)
+    {
+      this->file->get();
+      copyRang--;
+    }
+  ///////////////////////////////////////
+  string result="";
+  //Ajoute les elts qui nous interesse
+  while(copyN!=0){
+    copyN--;
+    result = result + (char)this->file->get();
+  }
+  ////////////////////////////////////
+  return result;
+}
+
+int StringFile::size()const{
+  return sizeClass;
+}
+
+
+char StringFile::operator[](const unsigned int rang){
+  /*int move = rang - this->rang ;
+  cout<<"this rang "<<this->rang<<endl;
+  cout<<"rang "<<rang<<endl;
+  cout<<"move "<<move<<endl;
+  cout<<"file->cur "<<this->file->cur<<endl;
+  /*if(this->rang + move > sizeClass || 
+     this->rang + move < -10 )
+    {
+      cout<<"Exception, sorti de tableau A faire"<<endl;
+      return ' ';
+      }
+  
+  file->clear();
+  this->file->seekg(3,this->file->cur);
+  cout<<"file->cur "<<this->file->cur<<endl;
+  if(this->file->good())
+    {
+      this->rang=rang;
+      return this->file->get();
+    }
+  else
+    {
+      
+      cout<<"Erreur mais pourquoi?"<<endl;
+      return ' ';
+      }
+  */
+  file->clear();
+  this->file->seekg(0,this->file->beg);
+  unsigned int copieRang=rang;
+  
+  //Parcours les élts inutile
+  while(copieRang!=0)
+    {
+      this->file->get();
+      copieRang--;
+    }
+  /////////////////////////////
+  if(!file->good())
+    {
+      cout<<"erreur"<<endl;
+    }
+  return this->file->get();
+
+}

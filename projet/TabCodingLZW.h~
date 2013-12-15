@@ -1,0 +1,22 @@
+#ifndef TABCODINGLZW_H
+#define TABCODINGLZW_H
+
+class TabCodingLZW{
+ private:
+  vector<Coding*> v;
+ public:
+  //Constructeur
+  TabCodingLZW(const string);
+  ~TabCodingLZW();
+
+  //Codage decodage
+  string codage(const string);
+
+  //Get et Set
+  vector<Coding*> getV()const;
+
+  //Affichage
+  string toString();
+};
+
+#endif

@@ -1,0 +1,30 @@
+#ifndef TABCODING_H
+#define TABCODING_H
+
+class TabCoding{
+ private:  
+  vector<Coding*> v;
+ public:
+  //Constructor
+  TabCoding(const string);
+  TabCoding(const TabCoding&);  
+  ~TabCoding();
+
+  //Get et Set
+  vector<Coding*> getV()const;
+
+
+  
+  
+  
+  //Trie 
+  void sortElt(int);
+  void swap(int,int);
+
+  //Affichage
+  string toString();
+
+};
+
+
+#endif

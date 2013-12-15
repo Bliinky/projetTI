@@ -1,0 +1,62 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+using namespace std;
+#include "principal.h"
+#include "Coding.h"
+#include "CodingHuffman.h"
+#include "TabCodingHuffman.h"
+#include "TabCodingLZW.h"
+
+const char* nameFile ="file.txt";
+
+
+
+int main(){
+  string file = readFile(nameFile);
+  //huffman(file);
+  lzw(file);
+  cout<<"oh"<<endl;
+  return 1;
+}
+
+void huffman(const string file){
+  TabCodingHuffman v(file);
+  
+  //v.toString();
+  CodingHuffman* root=v.createTree();
+  string code="";
+  root->createCode(code);
+  root->toStringTree();
+  string decode=v.codage(file,1);
+  cout<<decode<<endl;
+  cout<<v.decodage(decode,1)<<endl;
+  delete root;
+}
+
+void lzw(const string file){
+  TabCodingLZW v(file);
+  cout<<file<<endl;
+  v.toString();
+  cout<<v.codage(file)<<endl;
+  cout<<"hé hé"<<endl;
+  v.toString();
+}
+
+string readFile(const char* address){
+  ifstream file(address, ios::in); 
+  string buffer;
+  string line;
+
+  if(!file){
+    cerr << "Impossible d'ouvrir le fichier !" 
+	 << endl;
+  }
+  int sizeNotCharEnd=0;
+  while(file.good()){buffer+=file.get(); sizeNotCharEnd++;}
+  sizeNotCharEnd--;
+  buffer.resize(sizeNotCharEnd);
+  cout << "Le fichier est: "<<endl<<buffer<<endl;
+  return buffer;
+} 

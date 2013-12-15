@@ -1,0 +1,25 @@
+#ifndef STRINGFILE_H
+#define STRINGFILE_H
+
+class StringFile{
+ private:
+  ifstream* file;
+  unsigned int sizeClass;
+  unsigned int rang;
+ public:
+  //Constructor
+  //Construis un file par rapport à un nom de file 
+  StringFile(const char*);
+  ~StringFile();
+  
+  //Va du char à la place i au char à la place j
+  string iToj(unsigned int, unsigned int);
+
+  //Retourne la taille du fichier 
+  int size()const;
+  
+  //Retourne un char
+  char operator[](const unsigned int);
+};
+
+#endif

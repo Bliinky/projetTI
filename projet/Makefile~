@@ -1,0 +1,14 @@
+CC=g++
+CFLAGS=-g
+
+compress: Coding.o TabCoding.o principal.o
+	$(CC) -o prog Coding.o TabCoding.o principal.o
+
+principal.o : principal.cc 
+	$(CC) $(CFLAGS) -c principal.cc
+
+Coding.o: Coding.cc
+	$(CC) $(CFLAGS) -c Coding.cc
+
+TabCoding.o: TabCoding.cc
+	$(CC) $(CFLAGS) -c TabCoding.cc

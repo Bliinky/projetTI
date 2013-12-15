@@ -1,0 +1,14 @@
+#ifndef PROBABILITY_H
+#define PROBABILITY_H
+
+class Probability{
+ private:
+  string name;
+  float p;
+ public:
+  Probability();
+}
+
+
+
+#endif

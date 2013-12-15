@@ -1,0 +1,79 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+#include "Coding.h"
+#include "TabCoding.h"
+
+TabCoding::TabCoding(const string file){
+  int quantityElt=file.size();
+  for(int i=0;i<quantityElt;i++){
+    
+    bool isPresent=false;
+    
+    for(int j=0;j<v.size();j++){
+      
+      if(file[i]==v[j]->getName()[0]){
+	isPresent=true;
+	v[j]->upQuantity();
+	sortElt(j);
+      }
+    }
+    
+    if(!isPresent){
+      Coding *newElt=new Coding(file[i]);
+      v.push_back(newElt);
+    }
+  
+  }
+  for(int i=0;i<v.size();i++){
+    v[i]->calculP(quantityElt);
+    cout<<v[i]->getP()<<endl;
+  }
+}
+TabCoding::TabCoding(const TabCoding& tC){
+  for(int i=0;i<tC.getV().size();i++){
+    v.push_back(tC.getV()[i]);
+  }
+  
+}
+TabCoding::~TabCoding(){
+  // for(int i=0;i<v.size();i++)
+  // delete v[i];
+}
+
+//Get et Set 
+vector<Coding*> TabCoding::getV()const{return v;}
+
+
+
+//trie
+void TabCoding::sortElt(int rang){
+  if(rang==0)
+    return;
+  else{
+    if(v[rang]->getP()>v[rang-1]->getP()){
+      swap(rang,rang-1);
+      sortElt(rang-1);
+    }
+    else
+      return;
+  }
+}
+
+
+void TabCoding::swap(int i1,int i2){
+  Coding* p=v[i1];
+  v[i1]=v[i2];
+  v[i2]=p;
+}
+
+
+//Affichage
+string TabCoding::toString(){
+  for(int i=0;i<v.size();i++){
+    v[i]->toString();
+  }
+  return "";
+}

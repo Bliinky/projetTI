@@ -1,0 +1,12 @@
+#ifndef TABPROBABILITY_H
+#define TABPROBABILITY_H
+
+class TabProbability{
+ private:  
+  vector<Probability> v;
+ public:
+  
+}
+
+
+#endif

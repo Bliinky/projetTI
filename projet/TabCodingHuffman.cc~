@@ -1,0 +1,80 @@
+#include <iostream>
+using namespace std;
+
+#include "TabCoding.h"
+#include "TabCodingHuffman.h"
+
+//Creation de l'arbre de Huffman
+Coding* TabCoding::createTree(){
+  return TabCoding(*this).createTreeRec();
+  
+}
+
+Coding* TabCoding::createTreeRec(){
+  if(v.size()==1){
+    return v[0];
+  }
+  else{
+    Coding* sumElt=new Coding(v[v.size()-2],v[v.size()-1]);
+    v.pop_back();
+    v.pop_back();
+    v.push_back(sumElt);
+    sortElt(v.size()-1);
+    createTreeRec();
+  }
+}
+
+//Transformation
+string TabCoding::codage(const string aCoder,int nbLeter){
+  string estCoder="";
+  for(int i=0;i<aCoder.size();i=i+nbLeter){
+    int cpt=0;
+    bool isCodable=false;
+    while(!isCodable && cpt<v.size()){
+      isCodable=true;
+      for(int j=0;j<v[cpt]->getNameSize();j++){
+	if(aCoder[i+j]!=v[cpt]->getNameRang(j)){
+	  isCodable=false;
+	}
+      }
+      cpt++;
+    }
+    if(isCodable){
+      estCoder=estCoder+v[cpt-1]->getCode();
+    }
+  }
+  return estCoder;
+}
+string TabCoding::decodage(const string aDecoder,int nbMacCode){
+  string isDecoder="";
+  int sizeDecoder=0;
+  cout<<aDecoder.size()<<endl;
+  for(int i=0;i<aDecoder.size();i=i+sizeDecoder){
+    cout<<"ici c'est aaa "<<i<<endl;
+    int cpt=0;
+    bool isDecodable=false;
+    
+    while(!isDecodable && cpt<v.size()){
+      isDecodable=true;
+      int copieI=i;
+      cout<<"teste"<<endl;
+      for(int j=0;j<v[cpt]->getCodeSize();j++){
+	cout<<aDecoder[copieI]<<" "<<v[cpt]->getCodeRang(j)<<endl;
+	if(aDecoder[copieI]!=v[cpt]->getCodeRang(j)){
+	  isDecodable=false;
+	}
+	copieI++;
+      }
+      cpt++;
+    
+    }
+    if(isDecodable){
+      sizeDecoder=v[cpt-1]->getCodeSize();
+      isDecoder+=v[cpt-1]->getName();
+    }
+  
+  }
+  
+  return isDecoder;
+  
+}

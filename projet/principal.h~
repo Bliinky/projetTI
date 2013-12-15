@@ -1,0 +1,14 @@
+#ifndef PRINCIPAL_H
+#define PRINCIPAL_H
+
+
+string readFile(const char*);
+
+
+
+
+
+
+
+
+#endif

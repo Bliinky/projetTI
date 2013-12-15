@@ -1,0 +1,15 @@
+#ifndef TABCODINGHUFFMAN_H
+#define TABCODINGHUFFMAN_H
+
+class TabCodingHuffman : public TabCoding{
+ public:
+  //Creation de l'arbre de huffman
+  Coding* createTree();
+  Coding* createTreeRec();
+
+  //Transformation
+  string codage(const string,int);
+  string decodage(const string,int);
+};
+
+#endif

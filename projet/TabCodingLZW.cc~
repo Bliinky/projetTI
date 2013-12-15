@@ -1,0 +1,103 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+using namespace std;
+
+#include "Coding.h"
+#include "TabCodingLZW.h"
+
+//Constructeur et initialise le dictionnaire
+TabCodingLZW::TabCodingLZW(const string file){
+  int quantityElt=file.size();
+  int codeInt=0;
+  for(int i=0;i<quantityElt;i++){
+    bool isPresent=false;
+
+    for(int j=0;j<v.size();j++){
+      if(file[i]==v[j]->getName()[0]){
+	isPresent=true;
+	v[j]->upQuantity();
+	//sortElt(j);
+      }
+    }
+    if(!isPresent){
+      Coding* newElt=new Coding(file[i],codeInt);
+      codeInt++;
+      v.push_back(newElt);
+      cout<<"oh"<<endl;
+    }
+  }
+}
+TabCodingLZW::~TabCodingLZW(){
+  for(int i=0;i<v.size();i++){
+    delete v[i];
+  }
+}
+
+string TabCodingLZW::codage(const string file){
+  int intCode=v.size();
+  Coding* encoding=NULL;
+  string result="";
+  int tripFile=0;
+  cout<<"//////////////"<<endl;
+  while(tripFile < file.size()){
+    for(int i=0;i<v.size();i++){
+      bool isEncoding=true;
+      cout<<v[i]->toString()<<endl;
+      for(int j=0;j<v[i]->getNameSize();j++){
+	
+	if(tripFile+j<file.size()){
+	  cout<<file[tripFile+j]<<" affiche lettre "<<v[i]->getNameRang(j)<<endl;
+	  if(file[tripFile+j]!=v[i]->getNameRang(j)){
+	    isEncoding=false;
+	    j=v[i]->getNameSize();
+	    cout<<"FAUX"<<endl;
+	  }
+	}
+	else{
+	  j=v[i]->getNameSize();
+	  isEncoding=false;
+	}
+      }
+
+      cout<<"dejz "<<isEncoding<<endl;
+      if(isEncoding){
+	if(encoding!=NULL && 
+	   encoding->getNameSize()<v[i]->getNameSize()){
+	  encoding=v[i];
+	}
+	else{
+	      if(encoding==NULL){
+		encoding=v[i];
+	      }
+	}
+      }
+      
+ 
+      
+    }
+
+    tripFile=tripFile+encoding->getNameSize();
+    result=result + encoding->getCode();
+    cout<<" oh oh "<<encoding->getName()<<" oh oh "<< file[tripFile]<<endl;
+    Coding* newEltDic=new Coding(encoding->getName(),file[tripFile],intCode);
+    intCode++;
+    v.push_back(newEltDic);
+    encoding=NULL;
+  }
+
+  return result;
+}
+
+//Get et Set 
+vector<Coding*> TabCodingLZW::getV()const{return v;}
+
+
+string TabCodingLZW::toString(){
+  cout<<v.size();
+  for(int i=0;i<v.size();i++){
+    v[i]->toString();
+  }
+  return "";
+}
